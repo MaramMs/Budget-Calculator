@@ -32,6 +32,16 @@ function App() {
       setAlert({ show: false });
     }, 3000);
   };
+  const clearItems = () => {
+   setExpenses([])
+   handleAlert({ type: "danger", text: "Items cleared" })
+  };
+  const handleDeleted = (id) => {
+  const tempExpenses= expenses.filter(expense =>expense.id !== id );
+  setExpenses(tempExpenses);
+  handleAlert({ type: "danger", text: "Item deleted" })
+  };
+
   const handelSubmit = (e) => {
     e.preventDefault();
     if (charge !== "" && amount > 0) {
@@ -58,7 +68,11 @@ function App() {
           charge={charge}
           amount={amount}
         />
-        <ExpenseList expenses={expenses} />
+        <ExpenseList
+          expenses={expenses}
+          clearItems={clearItems}
+          handleDeleted={handleDeleted}
+        />
       </main>
 
       <h1>
