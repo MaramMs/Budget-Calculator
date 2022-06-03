@@ -16,6 +16,7 @@ function App() {
   const [expenses, setExpenses] = useState(initialExpenses);
   const [charge, setCharge] = useState("");
   const [amount, setAmount] = useState("");
+  const [alert, setAlert] = useState({ show: false });
 
   const handleCharge = (e) => {
     setCharge(e.target.value);
@@ -24,20 +25,29 @@ function App() {
   const handleAmount = (e) => {
     setAmount(e.target.value);
   };
-  
-  const handelSubmit = e => {
-  e.preventDefault()
-  if(charge !== '' && amount > 0){
-    const expense = {id:uuid(), charge,amount};
-    console.log(expense);
-    setExpenses([...expenses,expense]);
-    setCharge('');
-    setAmount('');
-  }1
-  }
+
+  const handleAlert = ({ type, text }) => {
+    setAlert({ show: true, type, text });
+    setTimeout(() => {
+      setAlert({ show: false });
+    }, 3000);
+  };
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    if (charge !== "" && amount > 0) {
+      const expense = { id: uuid(), charge, amount };
+      setExpenses([...expenses, expense]);
+      handleAlert({ type: "success", text: "item added" });
+      setCharge("");
+      setAmount("");
+    } else {
+      handleAlert({ type: "danger", text: "please enter valid value" });
+    }
+  };
 
   return (
     <>
+      {alert.show && <Alert type={alert.type} text={alert.text} />}
       <Alert />
       <h1>Budget Calculator </h1>
       <main>
