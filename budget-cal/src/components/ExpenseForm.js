@@ -11,13 +11,13 @@ export const ExpenseForm = ({ amount, charge, handleCharge, handleAmount,handelS
             type="text"
             name="charge"
             id="charge"
-            className="form-control"
+            className=" form-control"
             placeholder="e.g rent"
             value={charge}
             onChange={handleCharge}
           />
         </div>
-
+        
         <div className="form-group">
           <label htmlFor="amount">Amount</label>
           <input
@@ -33,7 +33,7 @@ export const ExpenseForm = ({ amount, charge, handleCharge, handleAmount,handelS
       </div>
       <button type="submit" className="btn">
         Submit
-        <MdSend />
+        <MdSend className="btn-icon" />
       </button>
     </form>
   );
