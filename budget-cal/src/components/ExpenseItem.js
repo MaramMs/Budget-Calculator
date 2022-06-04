@@ -6,14 +6,14 @@ export const ExpenseItem = ({ expense, handleDeleted,handleEdited }) => {
   return (
     <li className="item">
       <div className="info">
-        <span>{charge}</span>
-        <span>{amount}</span>
+        <span className="expense">{charge}</span>
+        <span className="amount">{amount}</span>
       </div>
       <div>
-        <button onClick={()=>handleEdited(id)}>
+        <button onClick={()=>handleEdited(id)} className='edit-btn'>
           <MdEdit />
         </button>
-        <button onClick={() =>handleDeleted(id)}>
+        <button onClick={() =>handleDeleted(id)} className='clear-btn'>
           <MdDelete />
         </button>
       </div>
