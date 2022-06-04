@@ -2,12 +2,12 @@ import React from "react";
 import { ExpenseItem } from "./ExpenseItem";
  import { MdDelete }from 'react-icons/md';
 
-export const ExpenseList = ({ expenses,  clearItems, handleDeleted }) => {
+export const ExpenseList = ({ expenses,  clearItems, handleDeleted, handleEdited }) => {
   return (
     <>
       <ul>
         {expenses.map((expense) =>  {
-          return <ExpenseItem key={expense.id} expense={expense} handleDeleted={handleDeleted}/>;
+          return <ExpenseItem key={expense.id} expense={expense} handleDeleted={handleDeleted} handleEdited={handleEdited}/>;
         })}
       </ul>
       {
