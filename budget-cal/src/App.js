@@ -17,6 +17,8 @@ function App() {
   const [charge, setCharge] = useState("");
   const [amount, setAmount] = useState("");
   const [alert, setAlert] = useState({ show: false });
+  const [edit, setEdit] = useState(false);
+  const [id, setId] = useState(0);
 
   const handleCharge = (e) => {
     setCharge(e.target.value);
@@ -33,21 +35,39 @@ function App() {
     }, 3000);
   };
   const clearItems = () => {
-   setExpenses([])
-   handleAlert({ type: "danger", text: "Items cleared" })
+    setExpenses([]);
+    handleAlert({ type: "danger", text: "Items cleared" });
   };
   const handleDeleted = (id) => {
-  const tempExpenses= expenses.filter(expense =>expense.id !== id );
-  setExpenses(tempExpenses);
-  handleAlert({ type: "danger", text: "Item deleted" })
+    const tempExpenses = expenses.filter((expense) => expense.id !== id);
+    setExpenses(tempExpenses);
+    handleAlert({ type: "danger", text: "Item deleted" });
+  };
+
+  const handleEdited = (id) => {
+    const expenseEdited = expenses.find((expense) => expense.id === id);
+    const { charge, amount } = expenseEdited;
+    setCharge(charge);
+    setAmount(amount);
+    setEdit(true);
+    setId(id);
   };
 
   const handelSubmit = (e) => {
     e.preventDefault();
     if (charge !== "" && amount > 0) {
-      const expense = { id: uuid(), charge, amount };
-      setExpenses([...expenses, expense]);
-      handleAlert({ type: "success", text: "item added" });
+      if (edit) {
+        let tempExpenses = expenses.map((item) => {
+          return item.id === id ? { ...item, charge, amount } : item;
+        });
+        setExpenses(tempExpenses);
+        setEdit(false);
+        handleAlert({ type: "success", text: "Item edited" });
+      } else {
+        const expense = { id: uuid(), charge, amount };
+        setExpenses([...expenses, expense]);
+        handleAlert({ type: "success", text: "item added" });
+      }
       setCharge("");
       setAmount("");
     } else {
@@ -72,6 +92,7 @@ function App() {
           expenses={expenses}
           clearItems={clearItems}
           handleDeleted={handleDeleted}
+          handleEdited={handleEdited}
         />
       </main>
 
